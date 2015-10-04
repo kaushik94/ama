@@ -169,7 +169,6 @@ module.exports = function() {
                 private: req.param('private'),
                 password: req.param('password')
             };
-
             if (!settings.private) {
                 options.private = false;
                 delete options.password;

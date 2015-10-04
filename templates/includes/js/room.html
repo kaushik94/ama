@@ -5,20 +5,9 @@
                 <div class="lcb-room-meta">
                     <h2 class="lcb-room-heading">
                         <span class="name">{{name}}</span>
-                        <span class="slug">#{{slug}}</span>
                         {{#if hasPassword}}
                             <span class="fa fa-lock btn password" title="<$ __('This room requires password to enter') $>" aria-label="<$ __('This room requires password to enter') $>"></span>
                         {{/if}}
-                        {{#if iCanEdit}}
-                            <a class="btn hidden-xs show-edit-room"
-                                title="<$ __('Edit Room') $>" aria-label="<$ __('Edit Room') $>">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        {{/if}}
-                        <a class="btn hidden-xs" title="<$ __('Chat History') $>" aria-label="<$ __('Chat History') $>"
-                            href="./transcript?room={{ id }}" target="_blank">
-                            <i class="fa fa-history"></i>
-                        </a>
                         <% if settings.files.enable %>
                             <a class="btn hidden-xs lcb-upload-trigger" title="<$ __('Upload Files') $>" aria-label="<$ __('Upload Files') $>" href="#">
                                 <i class="fa fa-upload"></i>
@@ -43,7 +32,6 @@
             <ul class="lcb-messages" aria-live="polite"></ul>
             <form class="lcb-entry">
                 <textarea class="lcb-entry-input" placeholder="<$ __('Got something to say?') $>" autofocus></textarea>
-                <button type="submit" class="btn btn-info lcb-entry-button"><$ __('Send') $></button>
             </form>
         </div><!-- lcb-chat end -->
         <div class="lcb-room-sidebar">
@@ -69,72 +57,5 @@
             </div>
             <% endif %>
         </div><!-- lcb-room-sidebar end -->
-        <div class="edit-room modal fade lcb-room-edit">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="" class="validate form-horizontal" method="post">
-                    <div class="modal-header">
-                        <button class="close hide-edit-room" type="button">&times;</button>
-                        <h4 class="modal-title"><$ __('Edit Room') $></h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="control-label col-sm-4"><$ __('Name') $></label>
-                            <div class="col-sm-7">
-                                <input class="required name form-control" name=
-                                "name" type="text" value="{{name}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class=
-                            "control-label col-sm-4"><$ __('Description') $></label>
-                            <div class="col-sm-7">
-                                <textarea class="form-control" name=
-                                "description">{{description}}</textarea>
-                            </div>
-                        </div>
-                        {{#if private}}
-                            <div class="form-group">
-                                <label class=
-                                "control-label col-sm-4"><$ __('Password') $></label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name=
-                                    "password" type="password" value="{{password}}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class=
-                                "control-label col-sm-4"><$ __('Confirm Password') $></label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name=
-                                    "confirmPassword" type="password" value="{{password}}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class=
-                                "control-label col-sm-4"><$ __('Participants') $></label>
-                                <div class="col-sm-7">
-                                    <textarea class="form-control lcb-entry-participants" name=
-                                    "participants">{{participants}}</textarea>
-                                </div>
-                            </div>
-                        {{/if}}
-                        <p class="response" style="display: none;"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-success pull-right submit-edit-room" type=
-                        "submit">
-                            <i class="icon-ok"></i> <$ __('Save') $>
-                        </button>
-                        <a class="archive-room btn btn-danger pull-left"
-                        tabindex="-1">
-                            <i class="icon-remove icon-white"></i>
-                            <$ __('Archive Room') $>
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-        </div><!-- edit room end -->
     </div><!-- lcb-room end -->
 </script>

@@ -111,14 +111,14 @@
             var $form = this.$(e.target),
                 $modal = this.$('#lcb-add-room'),
                 $name = this.$('.lcb-room-name'),
-                $slug = this.$('.lcb-room-slug'),
                 $description = this.$('.lcb-room-description'),
                 $password = this.$('.lcb-room-password'),
+                $date = new Date().valueOf(),
                 $confirmPassword = this.$('.lcb-room-confirm-password'),
                 $private = this.$('.lcb-room-private'),
                 data = {
                     name: $name.val().trim(),
-                    slug: $slug.val().trim(),
+                    slug: $date,
                     description: $description.val(),
                     password: $password.val(),
                     private: !!$private.prop('checked'),
@@ -129,7 +129,6 @@
                 };
 
             $name.parent().removeClass('has-error');
-            $slug.parent().removeClass('has-error');
             $confirmPassword.parent().removeClass('has-error');
 
             // we require name is non-empty
@@ -137,13 +136,6 @@
                 $name.parent().addClass('has-error');
                 return;
             }
-
-            // we require slug is non-empty
-            if (!data.slug) {
-                $slug.parent().addClass('has-error');
-                return;
-            }
-
             // remind the user, that users may share the password with others
             if (data.password) {
                 if (data.password !== $confirmPassword.val()) {

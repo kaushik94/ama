@@ -6,7 +6,8 @@
 
 var mongoose = require('mongoose'),
     uniqueValidator = require('mongoose-unique-validator'),
-    bcrypt = require('bcryptjs');
+    bcrypt = require('bcryptjs'),
+    md5 = require('md5');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -14,7 +15,7 @@ var RoomSchema = new mongoose.Schema({
     slug: {
         type: String,
         required: true,
-        trim: true,
+        trim: false,
         lowercase: true,
         unique: true,
         match: /^[a-z0-9_]+$/i
@@ -64,7 +65,7 @@ var RoomSchema = new mongoose.Schema({
 });
 
 RoomSchema.virtual('handle').get(function() {
-    return this.slug || this.name.replace(/\W/i, '');
+    return this.slug || Date();
 });
 
 RoomSchema.virtual('hasPassword').get(function() {
@@ -182,6 +183,7 @@ RoomSchema.method('toJSON', function(user) {
         name: room.name,
         description: room.description,
         lastActive: room.lastActive,
+        ownerAvatar: md5(),
         created: room.created,
         owner: room.owner,
         private: room.private,

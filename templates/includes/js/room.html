@@ -3,6 +3,7 @@
         <div class="lcb-room-chat ">
             <div class="lcb-room-header">
                 <div class="lcb-room-meta">
+		    <img class="lcb-room-creator-avatar lcb-avatar" src="https://www.gravatar.com/avatar/<$ owner.avatar $>?s=50" alt="logo"/>
                     <h2 class="lcb-room-heading">
                         <span class="name">{{name}}</span>
                         {{#if hasPassword}}
@@ -18,11 +19,11 @@
                                 <i class="fa fa-gift"></i>
                             </a>
                         <% endif %>
-                    </h2>
+                    </h2></div>
                     <div class="lcb-room-description">
                         <p>{{description}}</p>
                     </div>
-                </div>
+                
                 <div class="lcb-room-header-actions">
                     <a class="lcb-room-toggle-sidebar" href="#">
                         <i class="fa fa-chevron-left" aria-label="<$ __('Toggle Sidebar') $>"></i>

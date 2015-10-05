@@ -4,7 +4,8 @@
 
 'use strict';
 
-var settings = require('./../config').rooms;
+var settings = require('./../config').rooms,
+    md5 = require('md5');
 
 module.exports = function() {
     var app = this.app,
@@ -167,6 +168,7 @@ module.exports = function() {
                 slug: req.param('slug'),
                 description: req.param('description'),
                 private: req.param('private'),
+                ownerAvatar: md5(req.user.email),
                 password: req.param('password')
             };
             if (!settings.private) {

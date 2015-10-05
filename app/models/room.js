@@ -6,8 +6,7 @@
 
 var mongoose = require('mongoose'),
     uniqueValidator = require('mongoose-unique-validator'),
-    bcrypt = require('bcryptjs'),
-    md5 = require('md5');
+    bcrypt = require('bcryptjs');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -61,6 +60,11 @@ var RoomSchema = new mongoose.Schema({
     password: {
         type: String,
         required: false//only for password-protected room
+    },
+    ownerAvatar: {
+        type: String,
+        default: "",
+        required:true
     }
 });
 
@@ -183,7 +187,7 @@ RoomSchema.method('toJSON', function(user) {
         name: room.name,
         description: room.description,
         lastActive: room.lastActive,
-        ownerAvatar: md5(),
+        ownerAvatar: room.ownerAvatar,
         created: room.created,
         owner: room.owner,
         private: room.private,

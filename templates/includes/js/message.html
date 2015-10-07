@@ -1,10 +1,8 @@
 <script type="text/x-handlebars-template" id="template-message">
-    <li class="lcb-message {{#if mentioned}}lcb-message-mentioned{{/if}} {{#if fragment}}lcb-message-fragment{{/if}} {{#if own}}lcb-message-own{{/if}} {{#if fragment}}lcb-message-paste{{/if}}" data-owner="{{owner.id}}">
-        {{#unless fragment}}
-            <img class="lcb-message-avatar lcb-avatar lcb-room-poke" src="https://www.gravatar.com/avatar/{{owner.avatar}}?s=30" />
-        {{/unless}}
+    <li class="lcb-message {{#if mentioned}}lcb-message-mentioned{{/if}} {{#if own}}lcb-message-own{{/if}}" data-owner="{{owner.id}}">
+        <img class="lcb-message-avatar lcb-avatar lcb-room-poke" src="https://www.gravatar.com/avatar/{{owner.avatar}}?s=30" />
+        <span class="message-avatar-verified"><i class="fa fa-check-circle" /></span>
         <div class="lcb-message-meta">
-            {{#unless fragment}}
                 <span class="lcb-message-name">
                     <span class="lcb-room-poke">
                         <span class="lcb-message-displayname">
@@ -16,14 +14,10 @@
                     </span>
                 </span>
                 <time class="lcb-message-time" title="{{posted}}"></time>
-            {{/unless}}
             <div class="lcb-message-text">
-                {{#unless paste}}
-                    {{text}}
-                {{else}}
-                    <pre>{{text}}</pre>
-                {{/unless}}
+                    <p>{{text}}</p>
             </div>
+            <a data-togle="modal" href=""><button class="button answer-button" title="Write answer">Answer</button></a>
         </div>
     </li>
 </script>

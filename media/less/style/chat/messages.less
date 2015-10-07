@@ -4,9 +4,25 @@
 
  @messagePadding: 7px;
 
+p {
+    font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.message-avatar-verified {
+    position:absolute;
+    left: 30px;
+    top: 30px;
+    color: #3e78ad;  
+}
+
 .lcb-messages {
-    background: #fff;
-    padding: 0;
+    background: #fcffd8;
+    padding: 10px;
     margin: 0;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -17,11 +33,13 @@
 .lcb-message {
     min-height: 47px;
     border-top: 1px #eee solid;
-    padding: @messagePadding;
     font-size: 13px;
+    border-radius: 4px;
     margin: 0;
     display: block;
     position: relative;
+    background: white;
+    padding: 10px;
     &:first-child {
         border-top: none;
     }
@@ -31,7 +49,7 @@
         border-top: none;
     }
     &.lcb-message-own {
-        background: #fcffd8;
+        background: #fffff;
     }
     &.lcb-message-mentioned {
         background: #ffe9ee;
@@ -76,7 +94,7 @@
 .lcb-message-name {
     color: #666;
     font-weight: 700;
-    margin-bottom: @messagePadding - 2px;
+    margin-bottom: @messagePadding;
     display: block;
     .lcb-message-username {
         color: #aaa;
@@ -105,6 +123,18 @@
 
 .lcb-message-mention {
     font-weight: bold;
+}
+
+.answer-button {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    background: #3e78ad;
+    color: white;
+    border: 1px solid #3a66ad;
+    box-shadow: 0 1px 1px 0 rgba(200,200,200,0.6);
+    transition: color ease-in-out 100ms,background-color ease-in-out 100ms,border-color ease-in-out 100ms;
+    border-radius: 3px;
 }
 
 #lcb-qa-tabs {

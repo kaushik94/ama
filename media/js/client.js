@@ -312,6 +312,15 @@
     Client.prototype.getMessages = function(query, callback) {
         this.socket.emit('messages:list', query, callback);
     };
+
+    //
+    // Answers
+    //
+
+    Client.prototype.publishAnswer = function(answer) {
+        this.socket.emit('answers:create', answer);
+    };
+
     //
     // Files
     //
@@ -530,6 +539,7 @@
         // GUI
         //
         this.events.on('messages:send', this.sendMessage, this);
+        this.events.on('answers:publish', this.publishAnswer, this);
         this.events.on('rooms:update', this.updateRoom, this);
         this.events.on('rooms:leave', this.leaveRoom, this);
         this.events.on('rooms:create', this.createRoom, this);

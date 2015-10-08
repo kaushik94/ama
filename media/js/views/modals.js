@@ -269,7 +269,11 @@
     });
 
     window.LCB.WriteAnswerModalView = Backbone.View.extend({
+        events: {
+            'click .lcb-submit-answer': 'submitAnswer'
+        },
         initialize: function(options) {
+            this.client = options.client;
             this.render()
         },
         render: function() {
@@ -283,6 +287,22 @@
             this.$roomId = button.data('room');
             var modal = this.$el;
             modal.find('.modal-title').text(this.$question);
+        },
+        submitAnswer: function(e) {
+            e.preventDefault();
+
+            if (!this.client.status.get('connected')) return;
+
+            var $modal = this.$el,
+                $answer = $modal.find('textarea[name="answer"]');
+            if (!$answer.val()) return;
+            this.client.events.trigger('answers:publish', {
+                room: this.$roomId,
+                message: this.$messageId,
+                text: $answer.val()
+            });
+            $modal.modal('hide');
+            $answer.val('');
         }
     })
 

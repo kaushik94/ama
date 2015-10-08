@@ -57,4 +57,21 @@ MessageSchema.method('toJSON', function(user) {
     return data;
 });
 
+MessageSchema.method('isAuthorized', function(userId) {
+    if (!userId) {
+        return false;
+    }
+
+    userId = userId.toString();
+
+    // Check if userId doesn't match MongoID format
+    if (!/^[a-f\d]{24}$/i.test(userId)) {
+        return false;
+    }
+
+    if (this.owner.equals(userId)) {
+        return true;
+    }
+});
+
 module.exports = mongoose.model('Message', MessageSchema);

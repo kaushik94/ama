@@ -82,6 +82,9 @@
             this.giphyModal = new window.LCB.GiphyModalView({
                 el: this.$el.find('#lcb-giphy')
             });
+            this.writeAnswerModal = new window.LCB.WriteAnswerModalView({
+                el: this.$el.find("#lcb-write-answer")
+            })
             //
             // Misc
             //

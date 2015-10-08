@@ -1,5 +1,5 @@
 <script type="text/x-handlebars-template" id="template-message">
-    <li class="lcb-message {{#if mentioned}}lcb-message-mentioned{{/if}} {{#if own}}lcb-message-own{{/if}}" data-owner="{{owner.id}}">
+    <li id="{{id}}" class="lcb-message {{#if mentioned}}lcb-message-mentioned{{/if}} {{#if own}}lcb-message-own{{/if}}" data-owner="{{owner.id}}">
         <img class="lcb-message-avatar lcb-avatar lcb-room-poke" src="https://www.gravatar.com/avatar/{{owner.avatar}}?s=30" />
         <span class="message-avatar-verified"><i class="fa fa-check-circle" /></span>
         <div class="lcb-message-meta">
@@ -15,9 +15,9 @@
                 </span>
                 <time class="lcb-message-time" title="{{posted}}"></time>
             <div class="lcb-message-text">
-                    <p>{{text}}</p>
+                <p>{{text}}</p>
             </div>
-            <a data-togle="modal" href=""><button class="button answer-button" title="Write answer">Answer</button></a>
+            <button type="button" data-id="{{id}}" data-room="{{room.id}}" class="button answer-button" data-toggle="modal" data-target="#lcb-write-answer" title="Write answer">Answer</button>
         </div>
     </li>
 </script>

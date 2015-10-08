@@ -268,4 +268,22 @@
         }
     });
 
+    window.LCB.WriteAnswerModalView = Backbone.View.extend({
+        initialize: function(options) {
+            this.render()
+        },
+        render: function() {
+            this.$el.on('show.bs.modal', _.bind(this.putQuestion, this));
+        },
+        putQuestion: function(event) {
+            var button = $(event.relatedTarget);
+            this.$messageId = button.data('id');
+            var questionListElement = $('#'+this.$messageId);
+            this.$question = questionListElement.find('.lcb-message-text').text();
+            this.$roomId = button.data('room');
+            var modal = this.$el;
+            modal.find('.modal-title').text(this.$question);
+        }
+    })
+
 }(window, $, _);

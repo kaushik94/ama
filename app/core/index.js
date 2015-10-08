@@ -7,6 +7,7 @@ var EventEmitter = require('events').EventEmitter,
     AvatarCache = require('./avatar-cache'),
     FileManager = require('./files'),
     MessageManager = require('./messages'),
+    AnswerManager = require('./answers'),
     PresenceManager = require('./presence'),
     RoomManager = require('./rooms'),
     UserManager = require('./users'),
@@ -24,6 +25,10 @@ function Core() {
     });
 
     this.messages = new MessageManager({
+        core: this
+    });
+
+    this.answers = new AnswerManager({
         core: this
     });
 

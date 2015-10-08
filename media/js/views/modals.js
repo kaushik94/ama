@@ -268,4 +268,42 @@
         }
     });
 
+    window.LCB.WriteAnswerModalView = Backbone.View.extend({
+        events: {
+            'click .lcb-submit-answer': 'submitAnswer'
+        },
+        initialize: function(options) {
+            this.client = options.client;
+            this.render()
+        },
+        render: function() {
+            this.$el.on('show.bs.modal', _.bind(this.putQuestion, this));
+        },
+        putQuestion: function(event) {
+            var button = $(event.relatedTarget);
+            this.$messageId = button.data('id');
+            var questionListElement = $('#'+this.$messageId);
+            this.$question = questionListElement.find('.lcb-message-text').text();
+            this.$roomId = button.data('room');
+            var modal = this.$el;
+            modal.find('.modal-title').text(this.$question);
+        },
+        submitAnswer: function(e) {
+            e.preventDefault();
+
+            if (!this.client.status.get('connected')) return;
+
+            var $modal = this.$el,
+                $answer = $modal.find('textarea[name="answer"]');
+            if (!$answer.val()) return;
+            this.client.events.trigger('answers:publish', {
+                room: this.$roomId,
+                message: this.$messageId,
+                text: $answer.val()
+            });
+            $modal.modal('hide');
+            $answer.val('');
+        }
+    })
+
 }(window, $, _);

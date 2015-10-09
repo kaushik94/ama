@@ -71,6 +71,7 @@
     "i18n": "^0.5.0",
     "js-yaml": "^3.4.2",
     "less": "^2.5.1",
+    "lets-chat-google": "git+https://github.com/dyerti/lets-chat-google.git",
     "lodash": "^3.10.1",
     "md5": "^2.0.0",
     "migroose": "^0.5.0",

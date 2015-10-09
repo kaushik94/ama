@@ -35,8 +35,11 @@
             this.template = options.template;
             this.messageTemplate =
                 Handlebars.compile($('#template-message').html());
+            this.answerTemplate =
+                Handlebars.compile($('#template-answer').html());
             this.render();
             this.model.on('messages:new', this.addMessage, this);
+            this.model.on('answers:new', this.addAnswer, this);
             this.model.on('change', this.updateMeta, this);
             this.model.on('remove', this.goodbye, this);
             this.model.users.on('change', this.updateUser, this);
@@ -58,6 +61,7 @@
                 sidebar: store.get('sidebar')
             })));
             this.$messages = this.$('.lcb-messages');
+            this.$answers = this.$('.lcb-answers');
             // Scroll Locking
             this.scrollLocked = true;
             this.$messages.on('scroll',  _.bind(this.updateScrollLock, this));
@@ -357,6 +361,29 @@
             this.scrollLocked = true;
             this.scrollMessages();
         },
+        addAnswer: function(answer) {
+            // Smells like pasta
+            answer.paste = /\n/i.test(answer.text);
+
+            var posted = moment(answer.posted);
+
+            // WHATS MY NAME
+            answer.mentioned = new RegExp('\\B@(' + this.client.user.get('username') + '|all)(?!@)\\b', 'i').test(answer.text);
+
+            // Templatin' time
+            var $html = $(this.answerTemplate(answer).trim());
+            var $text = $html.find('.lcb-answer-text');
+
+            var that = this;
+            this.formatMessage($text.html(), function(text) {
+                $text.html(text);
+                $html.find('time').updateTimeStamp();
+                that.$answers.append($html);
+
+                //that.scrollMessages();
+            });
+
+        },
         addMessage: function(message) {
             // Smells like pasta
             message.paste = /\n/i.test(message.text);
@@ -365,7 +392,7 @@
 
             // Fragment or new message?
             message.fragment = this.lastMessageOwner === message.owner.id &&
-                            posted.diff(this.lastMessagePosted, 'minutes') < 2;
+                posted.diff(this.lastMessagePosted, 'minutes') < 2;
 
             // Mine? Mine? Mine? Mine?
             message.own = this.client.user.id === message.owner.id;

@@ -1,0 +1,11 @@
+<script type="text/x-handlebars-template" id="template-answer">
+    <li id="{{id}}" class="lcb-answer {{#if mentioned}}lcb-answer-mentioned{{/if}}">
+        <div class="lcb-message-text">
+            {{message.text}}
+        </div>
+        <time class="lcb-answer-time" title="{{posted}}"></time>
+        <div class="lcb-answer-text">
+            <p>{{text}}</p>
+        </div>
+    </li>
+</script>

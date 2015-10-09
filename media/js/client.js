@@ -240,6 +240,16 @@
                 !rejoin && room.lastMessage.set(messages[messages.length - 1]);
             });
 
+            that.getAnswers({
+                room: room.id,
+                take: 200,
+                expand: 'message',
+                reverse: true
+            }, function(answers) {
+                answers.reverse();
+                that.addAnswers(answers);
+            });
+
             if (that.options.filesEnabled) {
                 that.getFiles({
                     room: room.id,
@@ -316,7 +326,24 @@
     //
     // Answers
     //
-
+    Client.prototype.addAnswers = function(answers) {
+        _.each(answers, function(answer) {
+            this.addAnswer(answer);
+        }, this);
+    };
+    Client.prototype.getAnswers = function(query, callback) {
+        this.socket.emit('answers:list', query, callback);
+    };
+    Client.prototype.addAnswer = function(answer) {
+        var message = answer.message;
+        var room = this.rooms.get(answer.room);
+        if (!room || !answer || !message) {
+            // Unknown room or message, nothing to do!
+            return;
+        }
+        room.set('lastActive', answer.posted);
+        room.trigger('answers:new', answer);
+    };
     Client.prototype.publishAnswer = function(answer) {
         this.socket.emit('answers:create', answer);
     };
@@ -510,6 +537,9 @@
         });
         this.socket.on('messages:new', function(message) {
             that.addMessage(message);
+        });
+        this.socket.on('answers:new', function(answer) {
+            that.addAnswer(answer);
         });
         this.socket.on('rooms:new', function(data) {
             that.addRoom(data);

@@ -48,10 +48,12 @@ MessageSchema.method('toJSON', function(user) {
         }
     };
 
-    if (this.room._id) {
-        data.room = this.room.toJSON(user);
-    } else {
-        data.room = this.room;
+    if (this.room) {
+        if (this.room._id) {
+            data.room = this.room.toJSON(user);
+        } else {
+            data.room = this.room;
+        }
     }
 
     return data;

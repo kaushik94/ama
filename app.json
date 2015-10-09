@@ -1,11 +1,10 @@
 {
-    "name": "Let's Chat",
-    "description": "Self-hosted chat app for small teams",
-    "repository": "https://github.com/sdelements/lets-chat",
-    "logo": "http://i.imgur.com/eXTLHNN.png",
+    "name": "AMA",
+    "description": "website for ama",
+    "repository": "https://github.com/kaushik94/ama",
     "keywords": [
-        "lets",
-        "chat",
+        "ama",
+        "ask",
         "xmpp"
     ],
     "addons": [

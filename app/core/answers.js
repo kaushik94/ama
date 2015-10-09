@@ -116,18 +116,17 @@ AnswerManager.prototype.list = function(options, cb) {
         find = find.find({$text: {$search: options.query}});
     }
 
-    //TODO: check this
-    /*if (options.expand) {
+    if (options.expand) {
         var includes = options.expand.replace(/\s/, '').split(',');
-
-        if (_.includes(includes, 'owner')) {
-            find.populate('owner', 'id username displayName email avatar');
-        }
 
         if (_.includes(includes, 'room')) {
             find.populate('room', 'id name');
         }
-    }*/
+
+        if (_.includes(includes, 'message')) {
+            find.populate('message', 'id text posted owner');
+        }
+    }
 
     if (options.skip) {
         find.skip(options.skip);

@@ -1,0 +1,17 @@
+/*********************
+ * Answers
+ *********************/
+
+@import 'messages.less';
+
+.lcb-answers:extend(.lcb-messages) { }
+
+.lcb-answer:extend(.lcb-message) {
+    .lcb-message-text {
+        color: #666;
+        font-weight: 700;
+    }
+    .lcb-answer-mentioned:extend(.lcb-message .lcb-message-mentioned) { }
+}
+
+.lcb-answer-time:extend(.lcb-message-time) { }

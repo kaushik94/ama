@@ -24,6 +24,14 @@
                     <div class="lcb-room-description">
                         <p>{{description}}</p>
                     </div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#questions" aria-controls="questions" data-toggle="tab" role="tab"><$ __('Questions') $></a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#answers" aria-controls="answers" data-toggle="tab" role="tab"><$ __('Answers') $></a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="lcb-room-header-actions">
                     <a class="lcb-room-toggle-sidebar" href="#">
@@ -31,7 +39,10 @@
                     </a>
                 </div>
             </div><!-- lcb-room-header end -->
-            <ul class="lcb-messages" aria-live="polite"></ul>
+            <div class="tab-content">
+                <ul class="lcb-messages fade tab-pane in active" role="tabpanel" aria-live="polite" id="questions"></ul>
+                <ul class="lcb-answers fade tab-pane" role="tabpanel" aria-live="polite" id="answers"></ul>
+            </div>
             <form class="lcb-entry">
                 <textarea class="lcb-entry-input" placeholder="<$ __('Got something to say?') $>" autofocus></textarea>
             </form>

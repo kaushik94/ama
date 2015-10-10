@@ -84,7 +84,8 @@
 	"Rooms": "Rooms",
 	"Write Answer": "Write Answer",
 	"Answer": "Answer",
-    "Questions": "Questions",
-    "Answers": "Answers",
-	"Use Auth token as password": "Use Auth token as password"
+	"Questions": "Questions",
+	"Answers": "Answers",
+	"Use Auth token as password": "Use Auth token as password",
+	"Write your answer here...": "Write your answer here..."
 }

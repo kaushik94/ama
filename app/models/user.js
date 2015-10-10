@@ -73,6 +73,10 @@ var UserSchema = new mongoose.Schema({
         unique: true,
         match: /^[\w][\w\-\.]*[\w]$/i
     },
+    image: {
+        type: String,
+        trim: true
+    },
     displayName: {
         type: String,
         required: true,
@@ -282,7 +286,8 @@ UserSchema.method('toJSON', function() {
         lastName: this.lastName,
         username: this.username,
         displayName: this.displayName,
-        avatar: this.avatar
+        avatar: this.avatar,
+        image: this.image
     };
 });
 

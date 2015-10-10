@@ -36,7 +36,7 @@
             this.messageTemplate =
                 Handlebars.compile($('#template-message').html());
             this.answerTemplate =
-                Handlebars.compile($('#template-answer').html());
+                Handlebars.compile($('#template-answer').html(), { noEscape: true });
             this.render();
             this.model.on('messages:new', this.addMessage, this);
             this.model.on('answers:new', this.addAnswer, this);

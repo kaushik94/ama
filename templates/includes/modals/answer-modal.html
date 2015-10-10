@@ -8,8 +8,60 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label><$ __('Answer') $></label>
-                        <textarea placeholder="<$ __('Answer') $>" name="answer" class="lcb-answer-edit-box form-control"></textarea>
+                        <!-- Create toolbar container -->
+                        <div id="toolbar">
+                            <!-- Add a format group -->
+                            <span class="ql-format-group">
+                                <!-- Add font dropdown -->
+                                <select class="ql-font">
+                                    <option value="sans-serif" selected>Sans Serif</option>
+                                    <option value="Georgia, serif">Serif</option>
+                                    <option value="Monaco, \'Courier New\', monospace">Monospace</option>
+                                </select>
+                                <!-- Add font size dropdown -->
+                                <select class="ql-size">
+                                    <option value="10px">Small</option>
+                                    <option value="13px" selected>Normal</option>
+                                    <option value="18px">Large</option>
+                                    <option value="32px">Huge</option>
+                                </select>
+                            </span>
+
+                            <!-- Add a format group -->
+                            <span class="ql-format-group">
+                                <span title="Bold" class="ql-format-button ql-bold"></span>
+                                <span class="ql-format-separator"></span>
+                                <span title="Italic" class="ql-format-button ql-italic"></span>
+                                <span class="ql-format-separator"></span>
+                                <span title="Underline" class="ql-format-button ql-underline"></span>
+                                <span class="ql-format-separator"></span>
+                                <span title="Strikethrough" class="ql-format-button ql-strike"></span>
+                            </span>
+
+                            <!-- Add a format group -->
+                            <span class="ql-format-group">
+                                <span title="List" class="ql-format-button ql-list"></span>
+                                <span class="ql-format-separator"></span>
+                                <span title="Bullet" class="ql-format-button ql-bullet"></span>
+                                <span class="ql-format-separator"></span>
+                                <select title="Text Alignment" class="ql-align">
+                                    <option value="left" label="Left" selected=""></option>
+                                    <option value="center" label="Center"></option>
+                                    <option value="right" label="Right"></option>
+                                    <option value="justify" label="Justify"></option>
+                                </select>
+                                <span class="ql-format-separator"></span>
+                            </span>
+
+                            <!-- Add a format group -->
+                            <span class="ql-format-group">
+                                <span title="Link" class="ql-format-button ql-link"></span>
+                            </span>
+                        </div>
+                        <div id="editor">
+                            <div><$ __('Write your answer here...') $></div>
+                        </div>
+                        <!--<textarea placeholder="<$ __('Answer') $>" name="answer" class="lcb-answer-edit-box form-control"></textarea>-->
                     </div>
                 </div>
                 <div class="modal-footer">

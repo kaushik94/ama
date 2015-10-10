@@ -274,6 +274,13 @@
         },
         initialize: function(options) {
             this.client = options.client;
+            this.$editor = new Quill('#editor', {
+                modules: {
+                    'toolbar': { container: '#toolbar' },
+                    'link-tooltip': true
+                },
+                theme: 'snow'
+            });
             this.render()
         },
         render: function() {
@@ -294,15 +301,15 @@
             if (!this.client.status.get('connected')) return;
 
             var $modal = this.$el,
-                $answer = $modal.find('textarea[name="answer"]');
-            if (!$answer.val()) return;
+                $answer = this.$editor.getHTML();
+            if (!$answer.length) return;
             this.client.events.trigger('answers:publish', {
                 room: this.$roomId,
                 message: this.$messageId,
-                text: $answer.val()
+                text: $answer
             });
             $modal.modal('hide');
-            $answer.val('');
+            this.$editor.setHTML('');
         }
     })
 

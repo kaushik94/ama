@@ -105,6 +105,10 @@ MessageManager.prototype.list = function(options, cb) {
         }
     }
 
+    if(options.unanswered) {
+        find.find({answered: !options.unanswered});
+    }
+
     if (options.skip) {
         find.skip(options.skip);
     }

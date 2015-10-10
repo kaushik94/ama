@@ -26,10 +26,14 @@ var MessageSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
         index: true
+    },
+    answered: {
+        type: Boolean,
+        default: false
     }
 });
 
-MessageSchema.index({ text: 'text', room: 1, posted: -1, _id: 1 });
+MessageSchema.index({ text: 'text', room: 1, answered: -1, posted: -1, _id: 1 });
 
 // EXPOSE ONLY CERTAIN FIELDS
 // This helps ensure that the client gets
@@ -39,6 +43,7 @@ MessageSchema.method('toJSON', function(user) {
         id: this._id,
         text: this.text,
         posted: this.posted,
+        answered: this.answered || false,
 
         // if populate('owner') and user's been deleted - owner will be null
         // otherwise it will be an id or undefined

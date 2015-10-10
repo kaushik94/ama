@@ -41,7 +41,7 @@ AnswerManager.prototype.create = function(options, cb) {
             if(!message) {
                 return cb('Message does not exist.');
             }
-            if (!message.isAuthorized(options.owner)) {
+            if (!message.isAuthorized(options.owner, room.owner)) {
                 return cb('Not authorized.');
             }
 

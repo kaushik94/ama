@@ -59,7 +59,7 @@ MessageSchema.method('toJSON', function(user) {
     return data;
 });
 
-MessageSchema.method('isAuthorized', function(userId) {
+MessageSchema.method('isAuthorized', function(userId, roomOwnerId) {
     if (!userId) {
         return false;
     }
@@ -71,7 +71,7 @@ MessageSchema.method('isAuthorized', function(userId) {
         return false;
     }
 
-    if (this.owner.equals(userId)) {
+    if(userId === roomOwnerId.toString()) {
         return true;
     }
 });

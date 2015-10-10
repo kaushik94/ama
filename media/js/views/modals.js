@@ -292,11 +292,17 @@
             var questionListElement = $('#'+this.$messageId);
             this.$question = questionListElement.find('.lcb-message-text').text();
             this.$roomId = button.data('room');
+            this.$questionAnswered = button.data('answered');
             var modal = this.$el;
             modal.find('.modal-title').text(this.$question);
         },
         submitAnswer: function(e) {
             e.preventDefault();
+
+            if(this.$questionAnswered) {
+                sweetAlert("Oops...", "Question has already been answered!", "error");
+                return;
+            }
 
             if (!this.client.status.get('connected')) return;
 

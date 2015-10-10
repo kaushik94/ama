@@ -380,9 +380,17 @@
                 $html.find('time').updateTimeStamp();
                 that.$answers.append($html);
 
+                that.disableAnswerButton(answer.message.id);
+
                 //that.scrollMessages();
             });
 
+        },
+        disableAnswerButton: function(messageId) {
+            var $currentMessage = this.$messages.find("#" + messageId);
+            var $answerButton = $currentMessage.find('.answer-button');
+            $answerButton.attr('disabled', 'disabled');
+            $answerButton.data('answered', true);
         },
         addMessage: function(message) {
             // Smells like pasta
@@ -403,6 +411,10 @@
             // Templatin' time
             var $html = $(this.messageTemplate(message).trim());
             var $text = $html.find('.lcb-message-text');
+
+            if(message.answered) {
+                this.disableAnswerButton(message.id);
+            }
 
             var that = this;
             this.formatMessage($text.html(), function(text) {

@@ -169,6 +169,7 @@ module.exports = function() {
                 description: req.param('description'),
                 private: req.param('private'),
                 ownerAvatar: md5(req.user.email),
+                ownerImage: req.user.image,
                 password: req.param('password')
             };
             if (!settings.private) {

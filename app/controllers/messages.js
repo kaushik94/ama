@@ -63,6 +63,7 @@ module.exports = function() {
                     userId: req.user._id,
                     password: req.param('password'),
 
+                    unanswered: req.param('unanswered'),
                     room: req.param('room'),
                     since_id: req.param('since_id'),
                     from: req.param('from'),

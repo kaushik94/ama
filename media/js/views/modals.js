@@ -274,6 +274,13 @@
         },
         initialize: function(options) {
             this.client = options.client;
+            this.$editor = new Quill('#editor', {
+                modules: {
+                    'toolbar': { container: '#toolbar' },
+                    'link-tooltip': true
+                },
+                theme: 'snow'
+            });
             this.render()
         },
         render: function() {
@@ -285,24 +292,30 @@
             var questionListElement = $('#'+this.$messageId);
             this.$question = questionListElement.find('.lcb-message-text').text();
             this.$roomId = button.data('room');
+            this.$questionAnswered = button.data('answered');
             var modal = this.$el;
             modal.find('.modal-title').text(this.$question);
         },
         submitAnswer: function(e) {
             e.preventDefault();
 
+            if(this.$questionAnswered) {
+                sweetAlert("Oops...", "Question has already been answered!", "error");
+                return;
+            }
+
             if (!this.client.status.get('connected')) return;
 
             var $modal = this.$el,
-                $answer = $modal.find('textarea[name="answer"]');
-            if (!$answer.val()) return;
+                $answer = this.$editor.getHTML();
+            if (!$answer.length) return;
             this.client.events.trigger('answers:publish', {
                 room: this.$roomId,
                 message: this.$messageId,
-                text: $answer.val()
+                text: $answer
             });
             $modal.modal('hide');
-            $answer.val('');
+            this.$editor.setHTML('');
         }
     })
 

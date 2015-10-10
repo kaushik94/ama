@@ -50,7 +50,7 @@ AnswerManager.prototype.create = function(options, cb) {
                     console.error(err);
                     return cb(err);
                 }
-                if(!answer) {
+                if(!answer && !message.answered) {
                     Answer.create(options, function(err, answer) {
                         if (err) {
                             console.error(err);
@@ -58,6 +58,8 @@ AnswerManager.prototype.create = function(options, cb) {
                         }
                         // Touch Room's lastActive
                         room.lastActive = answer.posted;
+                        message.answered = true;
+                        message.save();
                         room.save();
                         // Temporary workaround for _id until populate can do aliasing
                         User.findOne(options.owner, function(err, user) {

@@ -344,8 +344,21 @@
         room.set('lastActive', answer.posted);
         room.trigger('answers:new', answer);
     };
+    Client.prototype.removeAnswer = function(object) {
+        if (!object || !object.answer || !object.message || !object.room) {
+            return;
+        }
+        var room = this.rooms.get(object.room);
+        if(!room) {
+            return;
+        }
+        room.trigger('answers:remove', object);
+    };
     Client.prototype.publishAnswer = function(answer) {
         this.socket.emit('answers:create', answer);
+    };
+    Client.prototype.deleteAnswer = function(answerId) {
+        this.socket.emit('answers:remove', answerId);
     };
 
     //
@@ -541,6 +554,9 @@
         this.socket.on('answers:new', function(answer) {
             that.addAnswer(answer);
         });
+        this.socket.on('answers:remove', function(object) {
+            that.removeAnswer(object);
+        });
         this.socket.on('rooms:new', function(data) {
             that.addRoom(data);
         });
@@ -570,6 +586,7 @@
         //
         this.events.on('messages:send', this.sendMessage, this);
         this.events.on('answers:publish', this.publishAnswer, this);
+        this.events.on('answers:delete', this.deleteAnswer, this);
         this.events.on('rooms:update', this.updateRoom, this);
         this.events.on('rooms:leave', this.leaveRoom, this);
         this.events.on('rooms:create', this.createRoom, this);

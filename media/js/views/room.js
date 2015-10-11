@@ -14,6 +14,7 @@
             'scroll .lcb-messages': 'updateScrollLock',
             'keypress .lcb-entry-input': 'sendMessage',
             'click .lcb-entry-button': 'sendMessage',
+            'click .answer-delete-button': 'deleteAnswer',
             'DOMCharacterDataModified .lcb-room-heading, .lcb-room-description': 'sendMeta',
             'click .lcb-room-toggle-sidebar': 'toggleSidebar',
             'click .show-edit-room': 'showEditRoom',
@@ -40,6 +41,7 @@
             this.render();
             this.model.on('messages:new', this.addMessage, this);
             this.model.on('answers:new', this.addAnswer, this);
+            this.model.on('answers:remove', this.removeAnswer, this);
             this.model.on('change', this.updateMeta, this);
             this.model.on('remove', this.goodbye, this);
             this.model.users.on('change', this.updateUser, this);
@@ -399,6 +401,21 @@
                 $answerButton.removeAttr('disabled');
             }
             $answerButton.data('answered', disable);
+        },
+        deleteAnswer: function(e) {
+            e.preventDefault();
+            if (!this.client.status.get('connected')) return;
+            var $button = $(e.currentTarget);
+            var $answerId = $button.data('id');
+            this.client.events.trigger('answers:delete', {
+                answer: $answerId,
+                room: this.model.id,
+                message: $button.data('message')
+            });
+        },
+        removeAnswer: function(object) {
+            this.disableAnswerButton(object.message, false);
+            this.$answers.find('#' + object.answer).remove();
         },
         addMessage: function(message) {
             // Smells like pasta

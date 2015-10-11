@@ -19,6 +19,11 @@ module.exports = function() {
             .emit('answers:new', ans);
     });
 
+    core.on('answers:remove', function (answer, message, room) {
+        app.io.to(room)
+            .emit('answers:remove', {answer: answer, message: message, room: room});
+    });
+
     //
     // Routes
     //
@@ -29,6 +34,9 @@ module.exports = function() {
         })
         .post(function(req) {
             req.io.route('answers:create');
+        })
+        .delete(function(req) {
+            req.io.route('answers:remove');
         });
 
     //
@@ -76,6 +84,22 @@ module.exports = function() {
                 });
 
                 res.json(answers);
+            });
+        },
+        remove: function (req, res) {
+            var options = {
+                owner: req.user._id,
+                answer: req.param('answer'),
+                room: req.param('room'),
+                message: req.param('message')
+            };
+
+            core.answers.remove(options, function(err) {
+                if(err) {
+                    return res.sendStatus(400);
+                }
+
+                res.json({success: true});
             });
         }
     });

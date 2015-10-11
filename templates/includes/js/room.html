@@ -20,7 +20,9 @@
                             </a>
                         <% endif %>
                     </h2>
-                    <span class="message-avatar-verified"><i class="fa fa-check-circle" /></span>
+                    {{#if owner.verified }}
+                        <span class="message-avatar-verified"><i class="fa fa-check-circle" /></span>
+                    {{/if}}
                     <div class="lcb-room-description">
                         <p>{{description}}</p>
                     </div>

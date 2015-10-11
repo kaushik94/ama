@@ -29,9 +29,10 @@ module.exports = function() {
     app.io.route('users', {
         list: function(req, res) {
             var options = {
-                    skip: req.param('skip'),
-                    take: req.param('take')
-                };
+                skip: req.param('skip'),
+                take: req.param('take'),
+                verified: req.param('verified')
+            };
 
             core.users.list(options, function(err, users) {
                 if (err) {

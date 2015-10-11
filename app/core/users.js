@@ -21,6 +21,10 @@ UserManager.prototype.list = function(options, cb) {
 
     var find = User.find();
 
+    if (options.verified) {
+        find.find({ verified: options.verified });
+    }
+
     if (options.skip) {
         find.skip(options.skip);
     }

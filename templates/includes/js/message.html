@@ -1,7 +1,9 @@
 <script type="text/x-handlebars-template" id="template-message">
     <li id="{{id}}" class="lcb-message {{#if mentioned}}lcb-message-mentioned{{/if}} {{#if own}}lcb-message-own{{/if}}" data-owner="{{owner.id}}">
         <img class="lcb-message-avatar lcb-avatar lcb-room-poke" src="{{#if owner.image }}{{owner.image}}?sz=30{{else}}https://www.gravatar.com/avatar/{{owner.avatar}}?s=30{{/if}}" />
-        <span class="message-avatar-verified"><i class="fa fa-check-circle" /></span>
+        {{#if owner.verified }}
+            <span class="message-avatar-verified"><i class="fa fa-check-circle" /></span>
+        {{/if}}
         <div class="lcb-message-meta">
                 <span class="lcb-message-name">
                     <span class="lcb-room-poke">

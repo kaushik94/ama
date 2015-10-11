@@ -386,11 +386,19 @@
             });
 
         },
-        disableAnswerButton: function(messageId) {
+        disableAnswerButton: function(messageId, disable) {
+            if(!disable && disable !== false) {
+                disable = true;
+            }
             var $currentMessage = this.$messages.find("#" + messageId);
             var $answerButton = $currentMessage.find('.answer-button');
-            $answerButton.attr('disabled', 'disabled');
-            $answerButton.data('answered', true);
+            if (disable) {
+                $answerButton.attr('disabled', 'disabled');
+            }
+            else {
+                $answerButton.removeAttr('disabled');
+            }
+            $answerButton.data('answered', disable);
         },
         addMessage: function(message) {
             // Smells like pasta

@@ -72,6 +72,39 @@ AnswerManager.prototype.create = function(options, cb) {
                             this.core.emit('answers:new', answer, message, room, user, options.data);
                         }.bind(this));
                     }.bind(this));
+                } else {
+                    var posted = Date.now(),
+                        answerId = answer._id;
+                    Answer.update({_id: answer._id}, {text: options.text, posted: posted}, function (err, answer) {
+                        if (err) {
+                            console.error(err);
+                            return cb(err);
+                        }
+                        // Touch Room's lastActive
+                        room.lastActive = posted;
+                        room.save();
+                        if(!message.answered){
+                            message.answered = true;
+                            message.save();
+                        }
+                        cb(null, answer, message, room);
+
+                        this.core.emit('answers:update', {
+                            answer: {
+                                id: answerId,
+                                text: options.text,
+                                posted: posted
+                            },
+                            message: {
+                                id: message._id,
+                                answered: message.answered
+                            },
+                            room: {
+                                id: room._id,
+                                lastActive: room.lastActive
+                            }
+                        });
+                    }.bind(this));
                 }
             }.bind(this));
         }.bind(this));

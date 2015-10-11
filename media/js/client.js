@@ -354,6 +354,17 @@
         }
         room.trigger('answers:remove', object);
     };
+    Client.prototype.updateAnswer = function(updates) {
+        if(!updates || !updates.answer || !updates.message || !updates.room) {
+            return
+        }
+        var room = this.rooms.get(updates.room.id);
+        room.set('lastActive', updates.room.lastActive);
+        if(!room) {
+            return;
+        }
+        room.trigger('answers:update', updates);
+    };
     Client.prototype.publishAnswer = function(answer) {
         this.socket.emit('answers:create', answer);
     };
@@ -556,6 +567,9 @@
         });
         this.socket.on('answers:remove', function(object) {
             that.removeAnswer(object);
+        });
+        this.socket.on('answers:update', function(updates) {
+            that.updateAnswer(updates);
         });
         this.socket.on('rooms:new', function(data) {
             that.addRoom(data);

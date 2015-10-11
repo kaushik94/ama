@@ -42,6 +42,7 @@
             this.model.on('messages:new', this.addMessage, this);
             this.model.on('answers:new', this.addAnswer, this);
             this.model.on('answers:remove', this.removeAnswer, this);
+            this.model.on('answers:update', this.updateAnswer, this);
             this.model.on('change', this.updateMeta, this);
             this.model.on('remove', this.goodbye, this);
             this.model.users.on('change', this.updateUser, this);
@@ -416,6 +417,22 @@
         removeAnswer: function(object) {
             this.disableAnswerButton(object.message, false);
             this.$answers.find('#' + object.answer).remove();
+        },
+        updateAnswer: function(updates) {
+            var message = updates.message,
+                answer = updates.answer;
+            this.disableAnswerButton(message.id, message.answered);
+            var answerListElement = this.$answers.find('#' + answer.id);
+            if (answerListElement) {
+                var answerElement = answerListElement.find('.lcb-answer-text');
+                if (answerElement) {
+                    answerElement.html(answer.text);
+                }
+                var postedElement = answerListElement.find('.lcb-answer-time');
+                if (postedElement) {
+                    postedElement.attr('title', answer.posted);
+                }
+            }
         },
         addMessage: function(message) {
             // Smells like pasta

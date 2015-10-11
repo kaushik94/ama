@@ -19,6 +19,11 @@ module.exports = function() {
             .emit('answers:new', ans);
     });
 
+    core.on('answers:update', function(updates) {
+        app.io.to(updates.room.id)
+            .emit('answers:update', updates);
+    });
+
     core.on('answers:remove', function (answer, message, room) {
         app.io.to(room)
             .emit('answers:remove', {answer: answer, message: message, room: room});

@@ -284,17 +284,28 @@
             this.render()
         },
         render: function() {
-            this.$el.on('show.bs.modal', _.bind(this.putQuestion, this));
+            this.$el.on('show.bs.modal', _.bind(this.fillFields, this));
         },
-        putQuestion: function(event) {
-            var button = $(event.relatedTarget);
-            this.$messageId = button.data('id');
-            var questionListElement = $('#'+this.$messageId);
-            this.$question = questionListElement.find('.lcb-message-text').text();
-            this.$roomId = button.data('room');
-            this.$questionAnswered = button.data('answered');
-            var modal = this.$el;
-            modal.find('.modal-title').text(this.$question);
+        fillFields: function(event) {
+            var $button = $(event.relatedTarget),
+                listElement = null;
+
+            this.$editor.setHTML('');
+            this.$questionAnswered = null;
+            this.$messageId = null;
+
+            if($button.data('edit') === true) {
+                this.$messageId = $button.data('message');
+                listElement = $('#'+$button.data('id'));
+                this.$editor.setHTML(listElement.find('.lcb-answer-text').html());
+            }
+            else {
+                this.$messageId = $button.data('id');
+                listElement = $('#'+this.$messageId);
+                this.$questionAnswered = $button.data('answered');
+            }
+            this.$roomId = $button.data('room');
+            this.$el.find('.modal-title').text(listElement ? listElement.find('.lcb-message-text').text() : 'Write Answer');
         },
         submitAnswer: function(e) {
             e.preventDefault();
@@ -306,15 +317,14 @@
 
             if (!this.client.status.get('connected')) return;
 
-            var $modal = this.$el,
-                $answer = this.$editor.getHTML();
-            if (!$answer.length) return;
+            var $answer = this.$editor.getHTML();
+            if (!this.$editor.getLength()) return;
             this.client.events.trigger('answers:publish', {
                 room: this.$roomId,
                 message: this.$messageId,
                 text: $answer
             });
-            $modal.modal('hide');
+            this.$el.modal('hide');
             this.$editor.setHTML('');
         }
     })

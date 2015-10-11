@@ -14,6 +14,7 @@
             'scroll .lcb-messages': 'updateScrollLock',
             'keypress .lcb-entry-input': 'sendMessage',
             'click .lcb-entry-button': 'sendMessage',
+            'click .answer-delete-button': 'deleteAnswer',
             'DOMCharacterDataModified .lcb-room-heading, .lcb-room-description': 'sendMeta',
             'click .lcb-room-toggle-sidebar': 'toggleSidebar',
             'click .show-edit-room': 'showEditRoom',
@@ -40,6 +41,8 @@
             this.render();
             this.model.on('messages:new', this.addMessage, this);
             this.model.on('answers:new', this.addAnswer, this);
+            this.model.on('answers:remove', this.removeAnswer, this);
+            this.model.on('answers:update', this.updateAnswer, this);
             this.model.on('change', this.updateMeta, this);
             this.model.on('remove', this.goodbye, this);
             this.model.users.on('change', this.updateUser, this);
@@ -386,11 +389,50 @@
             });
 
         },
-        disableAnswerButton: function(messageId) {
+        disableAnswerButton: function(messageId, disable) {
+            if(!disable && disable !== false) {
+                disable = true;
+            }
             var $currentMessage = this.$messages.find("#" + messageId);
             var $answerButton = $currentMessage.find('.answer-button');
-            $answerButton.attr('disabled', 'disabled');
-            $answerButton.data('answered', true);
+            if (disable) {
+                $answerButton.attr('disabled', 'disabled');
+            }
+            else {
+                $answerButton.removeAttr('disabled');
+            }
+            $answerButton.data('answered', disable);
+        },
+        deleteAnswer: function(e) {
+            e.preventDefault();
+            if (!this.client.status.get('connected')) return;
+            var $button = $(e.currentTarget);
+            var $answerId = $button.data('id');
+            this.client.events.trigger('answers:delete', {
+                answer: $answerId,
+                room: this.model.id,
+                message: $button.data('message')
+            });
+        },
+        removeAnswer: function(object) {
+            this.disableAnswerButton(object.message, false);
+            this.$answers.find('#' + object.answer).remove();
+        },
+        updateAnswer: function(updates) {
+            var message = updates.message,
+                answer = updates.answer;
+            this.disableAnswerButton(message.id, message.answered);
+            var answerListElement = this.$answers.find('#' + answer.id);
+            if (answerListElement) {
+                var answerElement = answerListElement.find('.lcb-answer-text');
+                if (answerElement) {
+                    answerElement.html(answer.text);
+                }
+                var postedElement = answerListElement.find('.lcb-answer-time');
+                if (postedElement) {
+                    postedElement.attr('title', answer.posted);
+                }
+            }
         },
         addMessage: function(message) {
             // Smells like pasta

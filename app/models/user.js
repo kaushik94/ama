@@ -65,6 +65,11 @@ var UserSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    verified: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
     username: {
         type: String,
         required: true,
@@ -287,7 +292,8 @@ UserSchema.method('toJSON', function() {
         username: this.username,
         displayName: this.displayName,
         avatar: this.avatar,
-        image: this.image
+        image: this.image,
+        verified: this.verified || false
     };
 });
 

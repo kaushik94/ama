@@ -20,7 +20,9 @@
                             </a>
                         <% endif %>
                     </h2>
-                    <span class="message-avatar-verified"><i class="fa fa-check-circle" /></span>
+                    {{#if owner.verified }}
+                        <span class="message-avatar-verified"><i class="fa fa-check-circle" /></span>
+                    {{/if}}
                     <div class="lcb-room-description">
                         <p>{{description}}</p>
                     </div>
@@ -39,7 +41,7 @@
                     </a>
                 </div>
             </div><!-- lcb-room-header end -->
-            <div class="tab-content">
+            <div id="qa-tab-content" class="tab-content">
                 <ul class="lcb-messages tab-pane in active" role="tabpanel" aria-live="polite" id="questions"></ul>
                 <ul class="lcb-answers tab-pane" role="tabpanel" aria-live="polite" id="answers"></ul>
             </div>

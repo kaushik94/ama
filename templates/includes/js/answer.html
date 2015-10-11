@@ -5,7 +5,11 @@
         </div>
         <time class="lcb-answer-time" title="{{posted}}"></time>
         <div class="lcb-answer-text">
-            <p>{{text}}</p>
+            {{text}}
+        </div>
+        <div class="answer-actions">
+            <button type="button" data-id="{{id}}" data-message="{{message.id}}" data-room="{{room}}" class="button answer-edit-button" data-toggle="modal" data-target="#lcb-write-answer" data-edit="true" title="Edit Answer">Edit</button>
+            <button type="button" data-id="{{id}}" data-message="{{message.id}}" class="button answer-delete-button" title="Delete Answer">Delete</button>
         </div>
     </li>
 </script>

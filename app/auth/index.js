@@ -22,6 +22,8 @@ function getProviders(core) {
 
         if (key === 'local') {
             Provider = require('./local');
+        } else if (key == 'google') {
+            Provider = require('./google');
         } else {
             Provider = plugins.getPlugin(key, 'auth');
         }

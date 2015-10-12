@@ -20,11 +20,7 @@
                 <p>{{text}}</p>
             </div>
             <div class="message-actions">
-                {{#if answered }}
-                    <button type="button" data-id="{{id}}" data-room="{{room.id}}" class="button answer-button" data-toggle="modal" data-target="#lcb-write-answer" title="Write answer" disabled>Answer</button>
-                {{else}}
-                    <button type="button" data-id="{{id}}" data-room="{{room.id}}" class="button answer-button" data-toggle="modal" data-target="#lcb-write-answer" title="Write answer">Answer</button>
-                {{/if}}
+                <button type="button" data-id="{{id}}" data-room="{{room.id}}" class="button answer-button" data-toggle="modal" data-target="#lcb-write-answer" title="Write answer" {{bind-attr disabled=answered}}>Answer</button>
             </div>
         </div>
     </li>

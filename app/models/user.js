@@ -293,6 +293,7 @@ UserSchema.method('toJSON', function() {
         displayName: this.displayName,
         avatar: this.avatar,
         image: this.image,
+        provider: this.provider,
         verified: this.verified || false
     };
 });

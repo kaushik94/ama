@@ -185,6 +185,9 @@ RoomSchema.method('toJSON', function(user) {
 
     var room = this.toObject();
 
+    var User = mongoose.model('User');
+    var roomOwner = User.findOne({_id: room.owner});
+
     var data = {
         id: room._id,
         slug: room.slug,
@@ -192,7 +195,8 @@ RoomSchema.method('toJSON', function(user) {
         description: room.description,
         lastActive: room.lastActive,
         ownerAvatar: room.ownerAvatar,
-        ownerImage: room.ownerImage,
+        ownerImage: roomOwner.image,
+        ownerProvider: roomOwner.provider,
         created: room.created,
         owner: room.owner,
         private: room.private,

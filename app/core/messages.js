@@ -97,7 +97,7 @@ MessageManager.prototype.list = function(options, cb) {
         var includes = options.expand.replace(/\s/, '').split(',');
 
         if (_.includes(includes, 'owner')) {
-            find.populate('owner', 'id username displayName email avatar image');
+            find.populate('owner', 'id username displayName email avatar image provider');
         }
 
         if (_.includes(includes, 'room')) {

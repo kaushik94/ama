@@ -22,8 +22,10 @@ function getProviders(core) {
 
         if (key === 'local') {
             Provider = require('./local');
-        } else if (key == 'google') {
+        } else if (key === 'google') {
             Provider = require('./google');
+        } else if (key === 'twitter') {
+            Provider = require('./twitter');
         } else {
             Provider = plugins.getPlugin(key, 'auth');
         }

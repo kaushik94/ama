@@ -60,6 +60,14 @@
                 context = _.extend(room, {
                     lastActive: moment(room.lastActive).calendar()
                 });
+            if (context.ownerImage) {
+                context.image = context.ownerImage;
+                if (context.ownerProvider === 'google') {
+                    context.image += '?sz=30';
+                }
+            } else {
+                context.image = "https://www.gravatar.com/avatar/" + context.ownerAvatar + "?s=30";
+            }
             this.$('.lcb-rooms-list').append(this.template(context));
         },
         remove: function(room) {

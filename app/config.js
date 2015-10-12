@@ -92,6 +92,9 @@ var pipeline = [
             if (key === 'google') {
                 var plugin = require('./auth/google');
             }
+            else if (key === 'twitter') {
+                var plugin = require('./auth/twitter');
+            }
             else {
                 var plugin = plugins.getPlugin(key, 'auth');
             }

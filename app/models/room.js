@@ -69,6 +69,11 @@ var RoomSchema = new mongoose.Schema({
     ownerImage: {
         type: String,
         default: ""
+    },
+    ownerProvider: {
+        type: String,
+        default: "local",
+        required: true
     }
 });
 
@@ -193,6 +198,7 @@ RoomSchema.method('toJSON', function(user) {
         lastActive: room.lastActive,
         ownerAvatar: room.ownerAvatar,
         ownerImage: room.ownerImage,
+        ownerProvider: room.ownerProvider,
         created: room.created,
         owner: room.owner,
         private: room.private,

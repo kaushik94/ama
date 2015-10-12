@@ -1,7 +1,7 @@
 <script type="text/x-handlebars-template" id="template-room-browser-item">
     <li class="lcb-rooms-list-item" data-id="{{id}}">
         <div class="lcb-rooms-list-item-top">
-            <img class="lcb-avatar room-owner-avatar" src="{{#if ownerImage }}{{ownerImage}}?sz=30{{else}}https://www.gravatar.com/avatar/{{ownerAvatar}}?s=30{{/if}}" />
+            <img class="lcb-avatar room-owner-avatar" src="{{image}}" height="30"/>
             {{#if hasPassword}}
                 <span class="lcb-rooms-list-item-password fa fa-lock"></span>
                 <a class="lcb-rooms-list-item-name" href="#!/room/{{id}}">{{name}}</a>

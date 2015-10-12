@@ -454,6 +454,14 @@
 
             message.answerAuthorization = this.model.get('iAmOwner');
 
+            if(message.owner && message.owner.image) {
+                if(message.owner.provider === 'google') {
+                    message.owner.image += '?sz=30';
+                }
+            } else {
+                message.owner.image = 'https://www.gravatar.com/avatar/' + message.owner.avatar + '?s=30';
+            }
+
             // Templatin' time
             var $html = $(this.messageTemplate(message).trim());
             var $text = $html.find('.lcb-message-text');

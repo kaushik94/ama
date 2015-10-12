@@ -26,6 +26,8 @@ var RoomModel = Backbone.Model.extend({
         this.users = new UsersCollection();
         this.files = new FilesCollection();
         this.lastMessage = new Backbone.Model();
+        this.lastAnswer = new Backbone.Model();
+
         //
         // Child events
         //

@@ -242,12 +242,14 @@
 
             that.getAnswers({
                 room: room.id,
+                since_id: room.lastAnswer.get('id'),
                 take: 200,
                 expand: 'message',
                 reverse: true
             }, function(answers) {
                 answers.reverse();
-                that.addAnswers(answers);
+                that.addAnswers(answers, !rejoin && !room.lastAnswer.get('id'));
+                !rejoin && room.lastAnswer.set(answers[answers.length - 1]);
             });
 
             if (that.options.filesEnabled) {
@@ -276,6 +278,7 @@
         if (room) {
             room.set('joined', false);
             room.lastMessage.clear();
+            room.lastAnswer.clear();
             if (room.get('hasPassword')) {
                 room.users.set([]);
             }
@@ -326,8 +329,11 @@
     //
     // Answers
     //
-    Client.prototype.addAnswers = function(answers) {
+    Client.prototype.addAnswers = function(answers, historical) {
         _.each(answers, function(answer) {
+            if (historical) {
+               answer.historical = true;
+            }
             this.addAnswer(answer);
         }, this);
     };
@@ -342,6 +348,9 @@
             return;
         }
         room.set('lastActive', answer.posted);
+        if (!answer.historical) {
+            room.lastAnswer.set(answer);
+        }
         room.trigger('answers:new', answer);
     };
     Client.prototype.removeAnswer = function(object) {

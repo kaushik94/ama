@@ -1,0 +1,49 @@
+#
+# Let's Chat Settings
+#
+# See defaults.yml for all available options
+#
+
+env: production # development / production
+
+http:
+  enable: true
+  host: 'localhost'
+  port: 5000
+
+https:
+  enable: false
+  port: 5001
+  key: key.pem
+  cert: certificate.pem
+
+files:
+  enable: true
+  provider: local
+  local:
+    dir: uploads
+
+xmpp:
+  enable: false
+  port: 5222
+  domain: example.com
+
+database:
+  uri: mongodb://localhost/letschat
+
+secrets:
+  cookie: secretsauce
+
+auth:
+  providers: [local, google, twitter]
+  local:
+    enableRegistration: true
+  google:
+    clientID: '511546186932-oivm5gujnnlblh0i48u8q5nceoqjubgb.apps.googleusercontent.com'
+    clientSecret: 'Gg8S08LPX27S09nKyj0Z7q0u'
+    callbackURL: 'http://localhost:5000/account/google/callback'
+    scope: 'openid email profile'
+  twitter:
+    consumerKey: 'dlc7quZqsMhZSqADEJTBmbs2l'
+    consumerSecret: '1MWA0vxXizky6s86siVHDSwDC3J4nDVwtM4HEnSTmdZykfOAzV'
+    callbackURL: 'http://localhost:5000/account/twitter/callback'

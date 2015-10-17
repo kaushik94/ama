@@ -373,6 +373,8 @@
             // WHATS MY NAME
             answer.mentioned = new RegExp('\\B@(' + this.client.user.get('username') + '|all)(?!@)\\b', 'i').test(answer.text);
 
+            answer.answerAuthorization = this.model.get('iAmOwner');
+
             // Templatin' time
             var $html = $(this.answerTemplate(answer).trim());
             var $text = $html.find('.lcb-answer-text');
@@ -449,6 +451,16 @@
 
             // WHATS MY NAME
             message.mentioned = new RegExp('\\B@(' + this.client.user.get('username') + '|all)(?!@)\\b', 'i').test(message.text);
+
+            message.answerAuthorization = this.model.get('iAmOwner');
+
+            if(message.owner && message.owner.image) {
+                if(message.owner.provider === 'google') {
+                    message.owner.image += '?sz=30';
+                }
+            } else {
+                message.owner.image = 'https://www.gravatar.com/avatar/' + message.owner.avatar + '?s=30';
+            }
 
             // Templatin' time
             var $html = $(this.messageTemplate(message).trim());

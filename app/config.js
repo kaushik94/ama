@@ -89,7 +89,15 @@ var pipeline = [
                 return;
             }
 
-            var plugin = plugins.getPlugin(key, 'auth');
+            if (key === 'google') {
+                var plugin = require('./auth/google');
+            }
+            else if (key === 'twitter') {
+                var plugin = require('./auth/twitter');
+            }
+            else {
+                var plugin = plugins.getPlugin(key, 'auth');
+            }
 
             if (!plugin || !plugin.defaults) {
                 return;

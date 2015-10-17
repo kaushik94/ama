@@ -12,7 +12,11 @@ function Google(options, core) {
 }
 
 Google.defaults = {
-    isSSO: true
+    isSSO: true,
+    clientID: null,
+    clientSecret: null,
+    callbackURL: null,
+    scope: null
 };
 
 Google.key = 'google';

@@ -12,7 +12,10 @@ function Twitter(options, core) {
 }
 
 Twitter.defaults = {
-    isSSO: true
+    isSSO: true,
+    consumerKey: null,
+    consumerSecret: null,
+    callbackURL: null
 };
 
 Twitter.key = 'twitter';

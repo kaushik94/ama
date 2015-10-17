@@ -41,18 +41,22 @@ AnswerSchema.method('toJSON', function(user) {
         posted: this.posted,
     };
 
-    if (this.message._id) {
-        data.message = this.message.toJSON(user);
-    } else {
-        data.message = this.message;
+    if(this.message){
+        if (this.message._id) {
+            data.message = this.message.toJSON(user);
+        } else {
+            data.message = this.message;
+        }
     }
 
-    if (this.room._id) {
-        data.room = this.room.toJSON(user);
-    } else {
-        data.room = this.room;
+    if(this.room){
+        if (this.room._id) {
+            data.room = this.room.toJSON(user);
+        } else {
+            data.room = this.room;
+        }
     }
-
+    
     return data;
 });
 

@@ -7,7 +7,9 @@ env: development # development / production
 http:
   enable: true
   host:
-  port: 5000
+# For some reason the port 80 works on heroku not on local, for local change it to 5000
+# We should fix this soon.
+  port: 80
 
 https:
   enable: false

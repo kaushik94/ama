@@ -324,7 +324,53 @@
     .text-overflow;
 }
 
-.room-owner-avatar {
-    padding-left: 2px;
+.avatar-frame {
+    border: 2px solid #c7b89e;      
+}
+.avatar-frame,.avatar-frame img{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    -webkit-border-radius: 30px; /* Saf3+, Chrome */
+    border-radius: 30px; /* Opera 10.5, IE 9 */
+    /*-moz-border-radius: 30px;  Disabled for FF1+ */
+}
+.room-avatar-verified {
+    display: inline-block;
+    position: absolute;
+    top: 48px;
+    left: 48px;
+    color: #3e78ad;
+    font-size: 50%;
+}
+.blue-tick {
+    -webkit-border-radius: 20px; /* Saf3+, Chrome */
+    border-radius: 20px; /* Opera 10.5, IE 9 */
+    /*-moz-border-radius: 20px;  Disabled for FF1+ */
+    background-color: white;
+}
+
+.questions-tab {
+    padding-top: 10px;
+    padding-left: 25px;
+    width: 49%;
+    text-align: center;
+}
+
+.answers-tab {
+    padding-top: 10px;
+    padding-left: 20px;
     padding-right: 10px;
+    width: 49%;
+    text-align: center;
+}
+
+.room-heading-avatar {
+    width: 7%;
+    display: inline-block;
+}
+
+.room-heading-name {
+    width: 60%;
+    display : inline-block;
 }

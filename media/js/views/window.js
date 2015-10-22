@@ -14,16 +14,16 @@
         focus: true,
         count: 0,
         mentions: 0,
-        countFavicon: new Favico({
-            position: 'down',
-            animation: 'none',
-            bgColor: '#b94a48'
-        }),
-        mentionsFavicon: new Favico({
-            position: 'left',
-            animation: 'none',
-            bgColor: '#f22472'
-        }),
+        // countFavicon: new Favico({
+        //     position: 'down',
+        //     animation: 'none',
+        //     bgColor: '#b94a48'
+        // }),
+        // mentionsFavicon: new Favico({
+        //     position: 'left',
+        //     animation: 'none',
+        //     bgColor: '#f22472'
+        // }),
         initialize: function(options) {
 
             var that = this;
@@ -68,7 +68,7 @@
                 this.faviconBadgeTimer = false;
                 this.faviconBadgeTimerFlip = false;
                 this.updateTitle();
-                this.mentionsFavicon.reset();
+                // this.mentionsFavicon.reset();
             }
         },
         onNewMessage: function(message) {
@@ -103,9 +103,9 @@
         },
         _flashFaviconBadge: function() {
             if (this.mentions > 0 && this.faviconBadgeTimerFlip) {
-                this.mentionsFavicon.badge(this.mentions);
+                // this.mentionsFavicon.badge(this.mentions);
             } else {
-                this.countFavicon.badge(this.count);
+                // this.countFavicon.badge(this.count);
             }
             this.faviconBadgeTimerFlip = !this.faviconBadgeTimerFlip;
         },

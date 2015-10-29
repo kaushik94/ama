@@ -24,7 +24,7 @@ module.exports = function() {
     //
     // Routes
     //
-    app.get('/', middlewares.requireLogin.redirect, function(req, res) {
+    app.get('/', function(req, res) {
         res.render('chat.html', {
             account: req.user,
             settings: settings,

@@ -614,7 +614,6 @@
         this.events.on('rooms:leave', this.leaveRoom, this);
         this.events.on('rooms:create', this.createRoom, this);
         this.events.on('rooms:switch', this.switchRoom, this);
-        this.events.on('rooms:archive', this.archiveRoom, this);
         this.events.on('profile:update', this.updateProfile, this);
         this.events.on('rooms:join', this.joinRoom, this);
     };

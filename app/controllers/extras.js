@@ -18,7 +18,7 @@ module.exports = function() {
     //
     // Routes
     //
-    app.get('/extras/emotes', middlewares.requireLogin, function(req) {
+    app.get('/extras/emotes', function(req) {
         req.io.route('extras:emotes:list');
     });
 
@@ -28,7 +28,7 @@ module.exports = function() {
         })
     );
 
-    app.get('/extras/replacements', middlewares.requireLogin, function(req) {
+    app.get('/extras/replacements', function(req) {
         req.io.route('extras:replacements:list');
     });
 

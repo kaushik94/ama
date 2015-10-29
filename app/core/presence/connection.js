@@ -6,20 +6,24 @@ var EventEmitter = require('events').EventEmitter,
 
 
 function Connection(type, user) {
-    EventEmitter.call(this);
-    this.type = type;
-    this.id = uuid.v4();
-    this.user = user;
+    if(user){
+      EventEmitter.call(this);
+      this.type = type;
+      this.id = uuid.v4();
+      this.user = user;
+    }
 }
 
 util.inherits(Connection, EventEmitter);
 
 Connection.prototype.toJSON = function() {
+  if(this)
     return {
         id: this.id,
         type: this.type,
         user: this.user
     };
+  return;
 };
 
 module.exports = Connection;

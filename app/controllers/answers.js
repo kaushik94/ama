@@ -33,10 +33,11 @@ module.exports = function() {
     // Routes
     //
     app.route('/rooms/:room/answers')
-        .all(middlewares.requireLogin)
+        .all(middlewares.roomRoute)
         .get(function(req) {
             req.io.route('answers:list');
         })
+        .all(middlewares.requireLogin, middlewares.roomRoute)
         .post(function(req) {
             req.io.route('answers:create');
         })
@@ -83,7 +84,6 @@ module.exports = function() {
                 if (err) {
                     return res.sendStatus(400);
                 }
-
                 answers = answers.map(function(answer) {
                     return answer.toJSON(req.user);
                 });

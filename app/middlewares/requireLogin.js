@@ -40,5 +40,5 @@ module.exports = getMiddleware(function(req, res) {
 });
 
 module.exports.redirect = getMiddleware(function(req, res) {
-    res.redirect('/login');
+    // res.redirect('/login');
 });

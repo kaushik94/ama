@@ -23,19 +23,20 @@ module.exports = function() {
     // Routes
     //
     app.route('/messages')
-        .all(middlewares.requireLogin)
         .get(function(req) {
             req.io.route('messages:list');
         })
+        .all(middlewares.requireLogin)
         .post(function(req) {
             req.io.route('messages:create');
         });
 
     app.route('/rooms/:room/messages')
-        .all(middlewares.requireLogin, middlewares.roomRoute)
+        .all(middlewares.roomRoute)
         .get(function(req) {
             req.io.route('messages:list');
         })
+        .all(middlewares.requireLogin, middlewares.roomRoute)
         .post(function(req) {
             req.io.route('messages:create');
         });

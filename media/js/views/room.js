@@ -20,7 +20,6 @@
             'click .show-edit-room': 'showEditRoom',
             'click .hide-edit-room': 'hideEditRoom',
             'click .submit-edit-room': 'submitEditRoom',
-            'click .archive-room': 'archiveRoom',
             'click .lcb-room-poke': 'poke',
             'click .lcb-upload-trigger': 'upload'
         },
@@ -53,10 +52,6 @@
             this.usersList = new window.LCB.RoomUsersView({
                 el: this.$('.lcb-room-sidebar-users'),
                 collection: this.model.users
-            });
-            this.filesList = new window.LCB.RoomFilesView({
-                el: this.$('.lcb-room-sidebar-files'),
-                collection: this.model.files
             });
         },
         render: function() {
@@ -92,7 +87,7 @@
         },
         getAtwhoUserFilter: function(collection) {
             var currentUser = this.client.user;
-
+            if(currentUser)
             return function filter(query, data, searchKey) {
                 var q = query.toLowerCase();
                 var results = collection.filter(function(user) {
@@ -247,6 +242,7 @@
             });
         },
         goodbye: function() {
+          if(this.client.user._id)
             swal('Archived!', '"' + this.model.get('name') + '" has been archived.', 'warning');
         },
         updateMeta: function() {

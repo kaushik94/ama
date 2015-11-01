@@ -190,10 +190,6 @@ AnswerManager.prototype.list = function(options, cb) {
                 return cb(err);
             }
 
-            if (!canJoin) {
-                return cb(null, []);
-            }
-
             find.limit(options.take)
                 .exec(function(err, answers) {
                     if (err) {

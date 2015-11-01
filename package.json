@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "stop": "pkill --signal SIGINT letschat",
     "prestart": "migroose",
     "migrate": "migroose",

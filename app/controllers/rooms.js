@@ -77,31 +77,33 @@ module.exports = function() {
         });
     });
 
-    core.on('rooms:archive', function(room) {
-        var emitters = getEmitters(room);
-        emitters.forEach(function(e) {
-            e.emitter.emit('rooms:archive', room.toJSON(e.user));
-        });
-    });
+    // core.on('rooms:archive', function(room) {
+    //     var emitters = getEmitters(room);
+    //     emitters.forEach(function(e) {
+    //       if(e.user)
+    //         e.emitter.emit('rooms:archive', room.toJSON(e.user));
+    //     });
+    // });
 
 
     //
     // Routes
     //
     app.route('/rooms')
-        .all(middlewares.requireLogin)
         .get(function(req) {
             req.io.route('rooms:list');
         })
+        .all(middlewares.requireLogin)
         .post(function(req) {
             req.io.route('rooms:create');
         });
 
     app.route('/rooms/:room')
-        .all(middlewares.requireLogin, middlewares.roomRoute)
+        .all(middlewares.roomRoute)
         .get(function(req) {
             req.io.route('rooms:get');
         })
+        .all(middlewares.requireLogin, middlewares.roomRoute)
         .put(function(req) {
             req.io.route('rooms:update');
         })
@@ -110,7 +112,7 @@ module.exports = function() {
         });
 
     app.route('/rooms/:room/users')
-        .all(middlewares.requireLogin, middlewares.roomRoute)
+        .all(middlewares.roomRoute)
         .get(function(req) {
             req.io.route('rooms:users');
         });
@@ -256,21 +258,10 @@ module.exports = function() {
                     return res.sendStatus(404);
                 }
 
-                if(!canJoin && room.password) {
-                    return res.status(403).json({
-                        status: 'error',
-                        roomName: room.name,
-                        message: 'password required',
-                        errors: 'password required'
-                    });
+                if(req.user.id){
+                  var user = req.user.toJSON();
+                  user.room = room._id;
                 }
-
-                if(!canJoin) {
-                    return res.sendStatus(404);
-                }
-
-                var user = req.user.toJSON();
-                user.room = room._id;
 
                 core.presence.join(req.socket.conn, room);
                 req.socket.join(room._id);

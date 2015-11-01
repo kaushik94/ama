@@ -28,12 +28,22 @@
         </div>
         <section class="lcb-sidebar">
             <div class="dropdown">
+              <% if account.username  %>
                 <a class="lcb-account-button dropdown-toggle" data-toggle="dropdown" href="3">
                     <img class="lcb-account-button-avatar lcb-avatar" src="<% if account.image %><$ account.image $><% if account.provider == 'google' %>?sz=80<% endif %><% else %>https://www.gravatar.com/avatar/<$ account.avatar $>?s=50<% endif %>" />
-                    <span class="lcb-account-button-name"><$ account.displayName $></span>
-                    <span class="lcb-account-button-username">@<$ account.username $></span>
+                      <span class="lcb-account-button-name"><$ account.displayName $></span>
+                      <span class="lcb-account-button-username">@<$ account.username $></span>
                     <i class="lcb-account-button-chevron fa fa-chevron-down"></i>
                 </a>
+              <% else %>
+                  <!-- Prompt to login -->
+                  <a href="./logout">
+                    <button type="button" class="btn btn-success login-button">
+                      <i class="fa fa-users"></i>
+                      LOGIN
+                    </button>
+                  </a>
+              <% endif %>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
                         <a data-toggle="modal" href="#lcb-profile">
@@ -91,9 +101,11 @@
                         </label>
                         <input id="lcb-rooms-browser-filter-input" class="lcb-rooms-browser-filter-input" type="search" placeholder="Search all rooms" autofocus />
                     </div>
-                    <a class="btn btn-success lcb-rooms-browser-new" data-toggle="modal" data-target="#lcb-add-room" href="#!/rooms/add">
-                        <i class="fa fa-plus" aria-label="<$ __('Add Room') $>"></i>
-                    </a>
+                    <% if account.username %>
+                      <a class="btn btn-success lcb-rooms-browser-new" data-toggle="modal" data-target="#lcb-add-room" href="#!/rooms/add">
+                          <i class="fa fa-plus" aria-label="<$ __('Add Room') $>"></i>
+                      </a>
+                    <% endif %>
                 </header>
                 <ul class="lcb-rooms-list"></ul>
                 <% include 'includes/modals/add-room.html' %>

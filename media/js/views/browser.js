@@ -87,21 +87,24 @@
             // We only care about other users
             if (this.$el.hasClass('hide') && model && model.id === this.client.user.id)
                 return;
-            $items.sort(function(a, b){
-                var ar = that.rooms.get($(a).data('id')),
-                    br = that.rooms.get($(b).data('id')),
-                    au = ar.users.length,
-                    bu = br.users.length,
-                    aj = ar.get('joined'),
-                    bj = br.get('joined');
-                if ((aj && bj) || (!aj && !bj)) {
-                    if (au > bu) return -1;
-                    if (au < bu) return 1;
-                }
-                if (aj) return -1;
-                if (bj) return 1;
-                return 0;
-            });
+            if(this.client.user._id){
+                $items.sort(function(a, b){
+                    var ar = that.rooms.get($(a).data('id')),
+                        br = that.rooms.get($(b).data('id')),
+                        au = ar.users.length,
+                        bu = br.users.length,
+                        aj = ar.get('joined'),
+                        bj = br.get('joined');
+                    if ((aj && bj) || (!aj && !bj)) {
+                        if (au > bu) return -1;
+                        if (au < bu) return 1;
+                    }
+                    if (aj) return -1;
+                    if (bj) return 1;
+                    return 0;
+                });
+            }
+
             $items.detach().appendTo(this.$('.lcb-rooms-list'));
         },
         filter: function(e) {

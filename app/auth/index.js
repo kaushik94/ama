@@ -93,9 +93,14 @@ function setup(app, session, core) {
 
     session = _.extend(session, {
         cookieParser: cookieParser,
-        passport: passport
+        passport: passport,
+        fail: onAuthorizeFail
     });
 
+    function onAuthorizeFail(data, message, error, accept){
+        accept();
+        return;
+    };
     var psiAuth = passportSocketIo.authorize(session);
 
     app.io.use(function (socket, next) {

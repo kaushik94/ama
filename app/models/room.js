@@ -63,16 +63,16 @@ var RoomSchema = new mongoose.Schema({
     },
     ownerAvatar: {
         type: String,
-        default: "",
+        default: '',
         required:true
     },
     ownerImage: {
         type: String,
-        default: ""
+        default: ''
     },
     ownerProvider: {
         type: String,
-        default: "local",
+        default: 'local',
         required: true
     }
 });

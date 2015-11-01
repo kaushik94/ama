@@ -1,3 +1,4 @@
+'use strict';
 var mongoose = require('mongoose'),
     passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;

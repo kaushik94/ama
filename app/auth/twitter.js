@@ -1,3 +1,4 @@
+'use strict';
 var mongoose = require('mongoose'),
     passport = require('passport'),
     TwitterStrategy = require('passport-twitter');

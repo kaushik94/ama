@@ -89,10 +89,15 @@
             }
         },
         initJsSocials: function(){
-          this.$('#room-social-share').jsSocials({
+          this.$('.room-social-share').jsSocials({
             showLabel: false,
             showCount: "inside",
-            shares: ["twitter", "facebook", "googleplus"]
+            url: window.location,
+            text: "AMA with " + this.model.get('name') + " at",
+            shares: [
+              { share: "twitter", via: "the_AMAlive", hashtags: "ama-live" },
+              { share: "facebook", label: "Share" }
+            ]
           });
         },
         getAtwhoUserFilter: function(collection) {

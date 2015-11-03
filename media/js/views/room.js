@@ -53,6 +53,10 @@
                 el: this.$('.lcb-room-sidebar-users'),
                 collection: this.model.users
             });
+
+            // Enable sharing of AMA on social networks 
+            // http://js-socials.com/
+            this.initJsSocials();
         },
         render: function() {
             this.$el = $(this.template(_.extend(this.model.toJSON(), {
@@ -84,6 +88,18 @@
                 error = _error;
                 return "";
             }
+        },
+        initJsSocials: function(){
+            this.$('.room-social-share').jsSocials({
+            showLabel: false,
+            showCount: "inside",
+            url: window.location,
+            text: "AMA with " + this.model.get('name') + " at",
+            shares: [
+              { share: "twitter", via: "the_AMAlive", hashtags: "ama-live" },
+              { share: "facebook", label: "Share" }
+            ]
+          });
         },
         getAtwhoUserFilter: function(collection) {
             var currentUser = this.client.user;

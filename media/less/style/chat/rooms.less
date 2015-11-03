@@ -86,11 +86,26 @@
     }
 }
 
+.lcb-header-toggle {
+    width: 40px;
+    height: 30px;
+    line-height: 100%;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    padding: 0;
+    display: inline-block;
+    background-color: #c0c0c0;
+    @media (min-width: @screen-xs-max) {
+        display: none;
+    }
+}
+
 .lcb-room-description {
     .text-overflow;
     color: #777;
     @media (max-width: @screen-xs-max) {
-        font-size: 12px;
+        display: none;
     }
 }
 
@@ -325,7 +340,7 @@
 }
 
 .avatar-frame {
-    border: 2px solid #c7b89e;      
+    border: 2px solid #c7b89e;
 }
 .avatar-frame,.avatar-frame img{
     width: 50px;
@@ -351,26 +366,39 @@
 }
 
 .questions-tab {
-    padding-top: 10px;
-    padding-left: 25px;
-    width: 49%;
+    padding-top: 6px;
+    padding-left: 5px;
+    width: 40%;
     text-align: center;
 }
 
 .answers-tab {
-    padding-top: 10px;
-    padding-left: 20px;
-    padding-right: 10px;
-    width: 49%;
+    padding-top: 6px;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 40%;
     text-align: center;
 }
 
 .room-heading-avatar {
     width: 7%;
     display: inline-block;
+    @media (max-width: @screen-xs-max) {
+        display: none;
+    }
 }
 
 .room-heading-name {
     width: 60%;
     display : inline-block;
+}
+
+.room-social-share {
+  position: absolute;
+  right: 10px;
+}
+
+.room-edit-icon {
+  color: #b92b27;
+  font-size: 150%;
 }

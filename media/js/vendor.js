@@ -18,3 +18,4 @@
 //= require vendor/backbone.keys/backbone.keys.js
 //= require vendor/quill/quill.min.js
 //= require common.js
+//= require vendor/jssocials/dist/jssocials.min.js

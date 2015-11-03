@@ -14,7 +14,8 @@
             'submit .lcb-rooms-add': 'create',
             'keyup .lcb-rooms-browser-filter-input': 'filter',
             'change .lcb-rooms-switch': 'toggle',
-            'click .lcb-rooms-switch-label': 'toggle'
+            'click .lcb-rooms-switch-label': 'toggle',
+            'click .lcb-rooms-list-item': 'gotoRoom'
         },
         initialize: function(options) {
             this.client = options.client;
@@ -37,6 +38,11 @@
         },
         updateToggles: function(room, joined) {
             this.$('.lcb-rooms-switch[data-id=' + room.id + ']').prop('checked', joined);
+        },
+        gotoRoom: function(e){
+            var $target = $(e.currentTarget),
+                $id = $target.data('id');
+            window.location = '#!/room/'+$id;
         },
         toggle: function(e) {
             e.preventDefault();

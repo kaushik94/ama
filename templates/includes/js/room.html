@@ -11,6 +11,12 @@
                     </h2>
                     <h2 class="room-heading-name">
                         <span class="name">{{name}}</span>
+                        {{#if iCanEdit}}
+                            <a class="btn btn-action hidden-xs show-edit-room"
+                                title="<$ __('Edit Room') $>" aria-label="<$ __('Edit Room') $>">
+                                <i class="fa fa-edit room-edit-icon"></i>
+                            </a>
+                        {{/if}}
                         {{#if hasPassword}}
                             <span class="fa fa-lock btn password" title="<$ __('This room requires password to enter') $>" aria-label="<$ __('This room requires password to enter') $>"></span>
                         {{/if}}
@@ -70,5 +76,41 @@
             </div>
             <% endif %>
         </div><!-- lcb-room-sidebar end -->
+        <div class="edit-room modal fade lcb-room-edit">
+        <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="" class="validate form-horizontal" method="post">
+                        <div class="modal-header">
+                            <button class="close hide-edit-room" type="button">&times;</button>
+                            <h4 class="modal-title"><$ __('Edit Room') $></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label col-sm-6"><$ __('Name') $></label>
+                                <div class="col-sm-11">
+                                    <input class="required name form-control" name=
+                                    "name" type="text" value="{{name}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=
+                                "control-label col-sm-6"><$ __('Description') $></label>
+                                <div class="col-sm-11">
+                                    <textarea class="form-control" name=
+                                    "description" rows="5">{{description}}</textarea>
+                                </div>
+                            </div>
+                            <p class="response" style="display: none;"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info pull-right submit-edit-room" type=
+                            "submit">
+                                <i class="icon-ok"></i> <$ __('Save') $>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+        </div>
     </div><!-- lcb-room end -->
 </script>

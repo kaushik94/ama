@@ -54,7 +54,8 @@
                 collection: this.model.users
             });
 
-            // Enable sharing of room http://js-socials.com/
+            // Enable sharing of AMA on social networks 
+            // http://js-socials.com/
             this.initJsSocials();
         },
         render: function() {
@@ -89,7 +90,7 @@
             }
         },
         initJsSocials: function(){
-          this.$('.room-social-share').jsSocials({
+            this.$('.room-social-share').jsSocials({
             showLabel: false,
             showCount: "inside",
             url: window.location,

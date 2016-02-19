@@ -270,7 +270,10 @@
 
     window.LCB.WriteAnswerModalView = Backbone.View.extend({
         events: {
-            'click .lcb-submit-answer': 'submitAnswer'
+            'click #lcb-submit-answer': 'submitAnswer',
+            'click #record-audio-answer': 'audioAnswer',
+            'click #stop-audio-answer': 'stopAudioAnswer',
+            'click #publish-audio-answer': 'publishAudioAnswer'
         },
         initialize: function(options) {
             this.client = options.client;
@@ -281,10 +284,38 @@
                 },
                 theme: 'snow'
             });
-            this.render()
+            this.render();
+            this.recordAudio = false;
+            var that = this;
+            navigator.getUserMedia({
+                        audio: true
+                },
+                function(stream) {
+                    that.recordAudio = RecordRTC(stream, {
+                        disableLogs: true,
+                        type: 'audio',
+                        bufferSize: 16384
+                    });
+                },
+                function(error) {
+                    swal(JSON.stringify(error), '', 'error');
+                }
+            );
+            this.recorder = {};
+            this.nowrecording = false;
         },
         render: function() {
             this.$el.on('show.bs.modal', _.bind(this.fillFields, this));
+        },
+        audioAnswer: function(e){
+            if(this.nowrecording){
+                this.pauseAudioAnswer();
+                this.nowrecording = false;
+            }
+            else{
+                this.recordAudioAnswer();
+                this.nowrecording = true;
+            }
         },
         fillFields: function(event) {
             var $button = $(event.relatedTarget),
@@ -299,6 +330,7 @@
                 listElement = $('#'+$button.data('id'));
                 this.$editor.setHTML(listElement.find('.lcb-answer-text').html());
             }
+
             else {
                 this.$messageId = $button.data('id');
                 listElement = $('#'+this.$messageId);
@@ -306,6 +338,72 @@
             }
             this.$roomId = $button.data('room');
             this.$el.find('.modal-title').text(listElement ? listElement.find('.lcb-message-text').text() : 'Write Answer');
+        },
+        get_signed_request: function(file, cb){
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+            xhr.overrideMimeType('text/plain; charset=x-user-defined');
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4){
+                    if(xhr.status === 200){
+                        var response = JSON.parse(xhr.responseText);
+                        cb(file.blob, response.post_url);
+                    }
+                    else{
+                        alert("Could not get signed URL.");
+                    }
+                }
+            };
+            xhr.send();
+        },
+        recordAudioAnswer: function(){
+            this.recordAudio.startRecording();
+        },
+        pauseAudioAnswer: function(){
+            this.recordAudio.pauseRecording();
+        },
+        stopAudioAnswer: function(){
+            var that = this;
+            that.recordAudio.stopRecording(
+                function() {
+                    that.nowrecording = false
+                    that.recordAudio.getDataURL(function(audioDataURL){
+                        var blob = that.recordAudio.getBlob();
+                        that.submitAudioAnswer(blob);
+                    });
+            });
+        },
+        showAudioAnswer: function(){
+            this.recordAudio.clearRecordedData();
+        },
+        submitAudioAnswer: function(file){
+            var that = this,
+                file_name = that.$messageId+'.wav';
+
+            that.get_signed_request({
+                name: file_name,
+                type: 'wav',
+                blob: file
+            },
+                that.uploadToS3
+            );
+        },
+        uploadToS3: function(file, post_url){
+            var that = this;
+            $.ajax({
+                url: post_url,
+                type: 'PUT',
+                data: file,
+                processData: false,
+                contentType: 'wav',
+                success: function(status){
+                    swal('Answer Published!', 'Your answer has been published.',
+                         'success');
+                }
+                error: function(err){
+                    swal('Shit!', 'Some error occured and your answer was not published.', 'error');
+                }
+            });
         },
         submitAnswer: function(e) {
             e.preventDefault();
@@ -326,6 +424,14 @@
             });
             this.$el.modal('hide');
             this.$editor.setHTML('');
+        },
+        success: function() {
+            swal('Answer Published!', 'Your answer has been published.',
+                 'success');
+            this.$el.modal('hide');
+        },
+        error: function() {
+            swal('Woops!', 'Your answer was not published.', 'error');
         }
     })
 

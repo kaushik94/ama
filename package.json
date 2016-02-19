@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "app.js",
   "scripts": {
-    "start":"node app.js",
+    "start": "node app.js",
     "stop": "pkill --signal SIGINT letschat",
     "prestart": "migroose",
     "migrate": "migroose",
@@ -59,6 +59,7 @@
   "homepage": "https://github.com/sdelements/lets-chat",
   "dependencies": {
     "async": "^1.4.2",
+    "aws-sdk": "^2.2.30",
     "bcryptjs": "~2.2.2",
     "body-parser": "^1.14.0",
     "colors": "~1.1.2",
